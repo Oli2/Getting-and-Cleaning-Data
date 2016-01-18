@@ -106,9 +106,6 @@ add ytest 1 variable to xtest using dplyr bind_cols
 
 test_final <- bind_cols(xtest, ytest)
 
-> dim(test_final)
-[1] 2947  562
-
 xtrain
 
 7352 obs. of 561 variables
@@ -121,8 +118,10 @@ action:
 
 add Ytrain 1 variable to xtrain using dplyr bind_cols
 
-> train_final <- bind_cols(xtrain, ytrain)
-> dim(train_final)
+train_final <- bind_cols(xtrain, ytrain)
+
+dim(train_final)
+
 [1] 7352  562
 
 
@@ -136,7 +135,8 @@ now both files are ready for a process to bind them by rows:
 
 final<- bind_rows(train_final,test_final)
 
-> dim(final)
+dim(final)
+
 [1] 10299   562
 
 
@@ -152,14 +152,22 @@ V2 - name of the measurement
 
 we read this file using:
 
-> list<- read.table("./UCI HAR Dataset/features.txt")
-> names(list)
+list<- read.table("./UCI HAR Dataset/features.txt")
+
+
+names(list)
+
 [1] "V1" "V2"
-> class(list)
+
+ class(list)
+ 
 [1] "data.frame"
-> str(list)
+ 
+ str(list)
 'data.frame': 561 obs. of  2 variables:
+
  $ V1: int  1 2 3 4 5 6 7 8 9 10 ...
+ 
  $ V2: Factor w/ 477 levels "angle(tBodyAccJerkMean),gravityMean)",..: 243 244 245 250 251 252 237 238 239 240 …
 
 
@@ -171,21 +179,21 @@ b)  std()
 
 we use grep() function to achieve that
 
->list_by_mean <- list[grep(“mean()", list$V2), ]
+list_by_mean <- list[grep(“mean()", list$V2), ]
 
->list_by_std <- list[grep("std()", list$V2), ]
+list_by_std <- list[grep("std()", list$V2), ]
 
-finally we bind them by rows:
+finally we bind them by rows
 
 list_by_m_s <- bind_rows(list_by_mean, list_by_std)
 
 the list_by_m_s does’t include the Y column (which identifies the type of activity)
 
-we add this in the following way:
+we add this in the following way
 
 we change the V2 column to a character
 
->list_by_m_s[,2] <- lapply(list_by_m_s[,2], as.character)
+list_by_m_s[,2] <- lapply(list_by_m_s[,2], as.character)
 
 we add row 80 V1 value:
 
@@ -200,7 +208,7 @@ we remove all the NAs from list_by_m_s
 list_by_m_s <- na.omit(list_by_m_s)
 
 
-to select only the columns listed in list_by_m_s from the “final” file we do:
+to select only the columns listed in list_by_m_s from the “final” file we do
 
 final_by_m_s<- select(final, list_by_m_s$V1)
 
@@ -208,10 +216,10 @@ final_by_m_s files needs to be supplemented with the “Y” column from the ori
 
 final_by_m_s[,80] <- final[,562]
 
-at this point we have two final files which accomplish Task 1&2:
+at this point we have two final files which accomplish Task 1&2
 
-1. final_by_m_s  -> includes all the measurements on the mean and standard deviation and column Y which identifies the type of activities
-2. list_by_m_s  -> includes the number and descriptive names of the columns for final_by_m_s 
+1. final_by_m_s  - includes all the measurements on the mean and standard deviation and column Y which identifies the type of activities
+2. list_by_m_s  - includes the number and descriptive names of the columns for final_by_m_s 
 
 
 
@@ -222,13 +230,12 @@ Task 3 & 4
 
 Uses descriptive activity names to name the activities in the data set
 
-Appropriately labels the data set with descriptive variable names
+Appropriately labels the data set with descriptive variable names
 
 *************************************************************************************
-In order to appropriately label  final_by_m_s with descriptive variable names we need to apply the values from column V2 of list_by_m_s to final_by_m_s 
+In order to appropriately label  final_by_m_s with descriptive variable names we need to apply the values from column V2 of list_by_m_s to final_by_m_s
 
-
->final_colnames<- setNames(final_by_m_s, list_by_m_s$V2)
+final_colnames<- setNames(final_by_m_s, list_by_m_s$V2)
 
 after this the only column with no descriptive name is Y. We address this by:
 
@@ -237,12 +244,12 @@ colnames(final_colnames)[87] <- as.character('Activity Name')
 The below will apply descriptive activity names to name the activities in the data set
 
 
-> final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==5] <- 'STANDING'
-> final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==1] <- 'WALKING'
-> final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==2] <- 'WALKING UPSTAIRS'
-> final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==3] <- 'WALKING DOWNSTAIRS'
-> final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==4] <- 'SITTING'
-> final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==6] <- 'LAYING'
+final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==5] <-'STANDING'
+final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==1] <-'WALKING'
+final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==2] <-'WALKING UPSTAIRS'
+final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==3] <-'WALKING DOWNSTAIRS'
+final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==4] <-'SITTING'
+final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==6] <-'LAYING'
 
 
 *************************************************************************************
@@ -284,9 +291,9 @@ final_colnames_list<-gsub(“bodybody", “body", final_colnames_list)
 
 
 
-now we apply final_colname_list to the final_colnames files:
+now we apply final_colname_list to the final_colnames files
 
->final_colnames <- setNames(final_colnames, final_colnames_list) #test it
+final_colnames <- setNames(final_colnames, final_colnames_list) #test it
 
 
 The above transformations accomplish Tasks 3&4
@@ -302,10 +309,11 @@ From the data set in step 4, create a second, independent tidy data set with the
 
 the data set created above (final_colnames) can by grouped by activity using  column #87 “activity name” and then mean function can be applied to all the numeric columns [1:86] of each variable.
 
-function aggregate will do the job in one line command:
+function aggregate will do the job in one line command
 
 
-> final_colnames_mean <- aggregate(final_colnames[1:86], list(final_colnames$`activity name`), mean)
+final_colnames_mean <- aggregate(final_colnames[1:86],
+list(final_colnames$`activity name`), mean)
 
 last line remanes the Group.1 column to Activity to properly describe this variable
 
@@ -313,4 +321,6 @@ final_colnames_mean <- rename(final_colnames_mean, Activity = Group.1)
 
 
 File  final_colnames_mean accomplished Task 5 of the project course.
+
+
 
