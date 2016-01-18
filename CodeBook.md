@@ -245,11 +245,17 @@ The below will apply descriptive activity names to name the activities in the da
 
 
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==5] <-'STANDING'
+
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==1] <-'WALKING'
+
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==2] <-'WALKING UPSTAIRS'
+
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==3] <-'WALKING DOWNSTAIRS'
+
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==4] <-'SITTING'
+
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==6] <-'LAYING'
+
 
 
 *************************************************************************************
@@ -283,17 +289,23 @@ bodybody is replaced by body
 
 
 final_colnames_list<-gsub("^t", "time", final_colnames_list)
+
 final_colnames_list<-gsub("^f", "frequency", final_colnames_list)
+
 final_colnames_list<-gsub(“acc", “accelerometer", final_colnames_list)
+
 final_colnames_list<-gsub(“gyro", “gyroscope", final_colnames_list)
+
 final_colnames_list<-gsub(“mag", “magnitude", final_colnames_list)
+
 final_colnames_list<-gsub(“bodybody", “body", final_colnames_list)
+
 
 
 
 now we apply final_colname_list to the final_colnames files
 
-final_colnames <- setNames(final_colnames, final_colnames_list) #test it
+final_colnames <- setNames(final_colnames, final_colnames_list)
 
 
 The above transformations accomplish Tasks 3&4
@@ -317,7 +329,7 @@ list(final_colnames$`activity name`), mean)
 
 last line remanes the Group.1 column to Activity to properly describe this variable
 
-final_colnames_mean <- rename(final_colnames_mean, Activity = Group.1)
+final_colnames_mean <- rename(final_colnames_mean, activity = Group.1)
 
 
 File  final_colnames_mean accomplished Task 5 of the project course.
