@@ -102,6 +102,25 @@ final_colnames_list <- gsub("\\()","",final_colnames_list)
 
 final_colnames_list <- gsub("\\-","",final_colnames_list)
 
+
+#Appropriately labeling the data set with descriptive variable names
+
+# prefix t is replaced by time
+# Acc is replaced by Accelerometer
+# Gyro is replaced by Gyroscope
+# prefix f is replaced by frequency
+# Mag is replaced by Magnitude
+# BodyBody is replaced by Body
+
+
+final_colnames_list<-gsub("^t", "time", final_colnames_list)
+final_colnames_list<-gsub("^f", "frequency", final_colnames_list)
+final_colnames_list<-gsub("acc", "accelerometer", final_colnames_list)
+final_colnames_list<-gsub("gyro", "gyroscope", final_colnames_list)
+final_colnames_list<-gsub("mag", "magnitude", final_colnames_list)
+final_colnames_list<-gsub("bodybody", "body", final_colnames_list)
+
+
 final_colnames <- setNames(final_colnames, final_colnames_list)
 
 #End of Tasks 3&4
