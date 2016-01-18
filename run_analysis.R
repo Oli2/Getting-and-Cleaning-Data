@@ -17,7 +17,7 @@ xtest <- read.table("./UCI HAR Dataset/test/X_test.txt")
 
 ytest <- read.table("./UCI HAR Dataset/test/y_test.txt")
 
-xtrain <- read.table("./UCI HAR Dataset/train/X_train.txt")
+xtrain <- pwdread.table("./UCI HAR Dataset/train/X_train.txt")
 
 ytrain <- read.table("./UCI HAR Dataset/train/y_train.txt")
 
@@ -87,6 +87,23 @@ final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==3] <- 'WALKIN
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==4] <- 'SITTING'
 final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==6] <- 'LAYING'
 
+
+
+# *************************************************************************************
+# 
+# Getting the names of variables nice and clean
+# 
+# 
+# *************************************************************************************
+
+final_colnames_list <- tolower(names(final_colnames))
+
+final_colnames_list <- gsub("\\()","",final_colnames_list)
+
+final_colnames_list <- gsub("\\-","",final_colnames_list)
+
+final_colnames <- setNames(final_colnames, final_colnames_list)
+
 #End of Tasks 3&4
 
 # *************************************************************************************
@@ -95,12 +112,15 @@ final_colnames[,'Activity Name'][final_colnames[,'Activity Name']==6] <- 'LAYING
 # From the data set in Task 4, create a second, independent tidy data set with the average of each variable for each activity and each subject.
 # 
 # *************************************************************************************
- 
-final_colnames_mean <- aggregate(final_colnames[1:79], list(final_colnames$`Activity Name`), mean)
 
-final_colnames_mean <- rename(final_colnames_mean, Activity = Group.1)
+
+final_colnames_mean <- aggregate(final_colnames[1:79], list(final_colnames$`activity name`), mean)
+
+final_colnames_mean <- rename(final_colnames_mean, activity = Group.1)
 
 write.table(final_colnames_mean, "tidy_data_set.txt", row.names = FALSE)
+
+
 
 
 
