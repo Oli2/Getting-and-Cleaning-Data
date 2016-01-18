@@ -75,7 +75,7 @@ library(dplyr)
 
 url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
-#creating the temp file which will be used to download and unzip the url
+creating the temp file which will be used to download and unzip the url
 
 temp <- tempfile()
 download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", temp)
@@ -265,14 +265,14 @@ final_colnames_list <- gsub(“\\-“,””, final_colnames_list)
 
 
 
-#Appropriately labeling the data set with descriptive variable names
+Appropriately labeling the data set with descriptive variable names
 
-# prefix t is replaced by time
-# acc is replaced by accelerometer
-# gyro is replaced by gyroscope
-# prefix f is replaced by frequency
-# mag is replaced by magnitude
-# bodybody is replaced by body
+prefix t is replaced by time
+acc is replaced by accelerometer
+gyro is replaced by gyroscope
+prefix f is replaced by frequency
+mag is replaced by magnitude
+bodybody is replaced by body
 
 
 final_colnames_list<-gsub("^t", "time", final_colnames_list)
