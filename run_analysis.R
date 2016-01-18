@@ -17,7 +17,7 @@ xtest <- read.table("./UCI HAR Dataset/test/X_test.txt")
 
 ytest <- read.table("./UCI HAR Dataset/test/y_test.txt")
 
-xtrain <- pwdread.table("./UCI HAR Dataset/train/X_train.txt")
+xtrain <- read.table("./UCI HAR Dataset/train/X_train.txt")
 
 ytrain <- read.table("./UCI HAR Dataset/train/y_train.txt")
 
